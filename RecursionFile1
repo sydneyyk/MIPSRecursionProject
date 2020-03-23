@@ -1,0 +1,9 @@
+# Howard ID = 02878236
+# N = 26 + (02878236 % 11)
+# N = 35 
+# Base 35
+# M = N - 10
+# M = 35 - 10
+# M = 25 (The range is through the 25th letter of the alphabet, Y)
+.text
+main: 

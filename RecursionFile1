@@ -34,9 +34,22 @@ jal subProgramA #jump and link to the subprogam which passes ENTIRE string
 	li $t7, -1 #Used for invaild input program
 	lb $s0, ($t0) #Loads the bit that $t0 is pointing to
 	#beq $s0, 0, Finish
-	beq $s0, 9, Skip # checks if the bit is a tabs character 
-	beq $s0, 32, Skip #checks if the bit is a space character
+	beq $s0, 9, Skip #Checks if the bit is a tabs character 
+	beq $s0, 32, Skip #Checks if the bit is a space character
 	move $t6, $t0 #Stores the first non-space/tab character
 	j loopFunc #Jumps to the beginning of the loop function
+	
+skip:
+	addi $t0,$t0,1 #Moves the $t0 to the next element of in the user inputted string
+	j startFunc
+	
+loopFunc:
+	lb $s0, ($t0) #Loads the bit that $t0 is pointing to
+	beq $s0, 0, substring #Checks if the bit is null
+	beq $s0, 10, substring #checks if the bit is a new line 
+	addi $t0,$t0,1 #move the $t0 to the next element of the array	
+
+
+
 
   

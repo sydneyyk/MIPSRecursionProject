@@ -5,5 +5,20 @@
 # M = N - 10
 # M = 35 - 10
 # M = 25 (The range is through the 25th letter of the alphabet, Y)
+
+.data
+	maxInput: .space 100
+	output: .asciiz "\n"
+	notValid: .asciiz "NaN"
+	comma: .asciiz ","
+  
 .text
-main: 
+main:
+  #Print the Input String
+	li $v0, 4	#System call which prints text
+	la $a0, maxInput	#Reads the user input now stored in the $a0 reg
+  syscall
+
+    
+  
+  

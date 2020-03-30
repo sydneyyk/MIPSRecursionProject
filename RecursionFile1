@@ -15,13 +15,13 @@ invalidInput:	.asciiz "Invalid input"
 
 main:
 	li $v0, 8		#System call reads string
-	la $a0, maxSize	#The users input is moved to the $a0 reg
+	la $a0, maxSize		#The users input is moved to the $a0 reg
 	syscall
 	
 	li $t0, 32		#Storing the available space (32 bits) into $t3
 	li $t1, 0 		#Counter (x = 0)
 	li $s0, 0		#Keeps track of of the previous character being passed in
-	la $t3, maxSize	#Loading the input from user into address of register
+	la $t3, maxSize		#Loading the input from user into address of register
 	li $t4, 0		#Number of characters equals zero
 	li $t5, 10		#Puts new line character into $t5 reg
 	li $t6, 0		#This counter keeps track of the number of empty spaces before characters in string.

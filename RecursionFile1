@@ -19,7 +19,7 @@ main:
 	syscall
 	
 	li $t0, 32		#Storing the available space (32 bits) into $t3
-	li $t1, 0 		#Counter (i = 0)
+	li $t1, 0 		#Counter (x = 0)
 	li $s0, 0
 	la $t3, maxSize
 	li $t4, 0

@@ -7,21 +7,24 @@
 # M = 25 (The range is through the 25th letter of the alphabet, Y)
 
 .data
-	maxInput: .space 100
-	notValid: .asciiz "Invalid input"
-  
+maxSize:	.space 101
+invalidInput:	.asciiz "Invalid input"
+
 .text
+.global main
+
 main:
-
-#Print the Input String
-li $v0, 4		#System call which prints text
-la $a0, maxInput	#Reads the user input now stored in the $a0 reg
-syscall
-
-li $v0, 8		#System call reads string
-la $a0, maxInput	#The users input is moved to the $a0 reg
-li $a1, 100		#Load immiadte value of 100 into register (should be able to read up to 100 characters)
-syscall
+	li $v0, 8		#System call reads string
+	la $a0, maxSize	#The users input is moved to the $a0 reg
+	syscall
+	
+	li $t0, 32		#Storing the available space (32 bits) into $t3
+	li $t1, 0 		#Counter (i = 0)
+	li $s0, 0
+	la $t3, maxSize
+	li $t4, 0
+	li $t5, 10
+	li $t6, 0
 
 jal subProgramA #jump and link to the subprogam which passes ENTIRE string
   

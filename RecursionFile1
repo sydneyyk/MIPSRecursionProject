@@ -26,19 +26,22 @@ main:
 	li $t5, 10		#Puts new line character into $t5 reg
 	li $t6, 0		#This counter keeps track of the number of empty spaces before characters in string.
 	
+	LoopingFunc:
+	lb $t7, 0($t3)				#Retrieves user input
+	beq $t7, $t5, breakFunc			#Branches to break function if there is newline
+	beq $t7, $t0, skipSpaces		#Current character is a space
+	bne $s0, $t0, skipSpaces		#Previous character is a space
+	beq $t4, $0, skipSpaces			#There are still characters left(prev num of characters != 0)
+	beq $t7, $0, skipSpaces			#Character is empty space
+	beq $t7, $t5, skipSpaces		#Character is newline
 
 
 
-  startFunc: #Looks for leading/trailing blank spaces and tab characters
-	li $t2, 0 #Checks for space or tabs within the input
-	li $t7, -1 #Used for invaild input program
-	lb $s0, ($t0) #Loads the bit that $t0 is pointing to
-	#beq $s0, 0, Finish
-	beq $s0, 9, Skip #Checks if the bit is a tabs character 
-	beq $s0, 32, Skip #Checks if the bit is a space character
-	move $t6, $t0 #Stores the first non-space/tab character
-	j loopFunc #Jumps to the beginning of the loop function
-	
+
+
+
+
+
 skip:
 	addi $t0,$t0,1 #Moves the $t0 to the next element of in the user inputted string
 	j startFunc

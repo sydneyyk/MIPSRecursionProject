@@ -34,6 +34,16 @@ main:
 	beq $t4, $0, skipSpaces			#There are still characters left(prev num of characters != 0)
 	beq $t7, $0, skipSpaces			#Character is empty space
 	beq $t7, $t5, skipSpaces		#Character is newline
+	
+	sub $t3, $t1, $t6			#Subtracts the counter from address of the the pointer
+	addi $t3, $t3, 1			#Adds one to current register
+	li $t7, 4				#Loads the characters that are valid from the input
+	ble $t3, $t7, notValidFunc		#The input is within range but is still not valid
+	
+	li $v0, 4				#System call prints 
+	la $a0, invalidInput			#Loads the prompt message
+	syscall
+	jr $ra
 
 
 

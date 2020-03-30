@@ -27,12 +27,8 @@ main:
 	li $t6, 0		#This counter keeps track of the number of empty spaces before characters in string.
 	
 
-jal subProgramA #jump and link to the subprogam which passes ENTIRE string
-  
- #Converts User Input Using Recursion
- subProgramA: 
-  ****reusive func****
-  
+
+
   startFunc: #Looks for leading/trailing blank spaces and tab characters
 	li $t2, 0 #Checks for space or tabs within the input
 	li $t7, -1 #Used for invaild input program

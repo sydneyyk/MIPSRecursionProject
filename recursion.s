@@ -86,4 +86,6 @@ longInputFunc:
 	li $v0, 10
 	syscall
 	
-	
+emptyStringFunc: 
+	la $s0, maxInput			#Loads the users input into the reg to read
+	add $s0, $s0, $t6

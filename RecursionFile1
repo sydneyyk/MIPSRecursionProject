@@ -69,10 +69,10 @@ spaceCounterFunc:
 	
 breakFunc:
 	li $t7, 4
-	ble $t4, $t7, longInputFunc			
+	ble $t4, $t7, longInputFunc		#Checks to see if the user input is more than 4 bytes	
 		
 	li $v0, 4
-	la $a0, invalidInput
+	la $a0, invalidInput			#Prints the invalid prompt if the the characters are more than 4 bytes
 	syscall					
 	li $v0, 10
 	syscall

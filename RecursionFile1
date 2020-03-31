@@ -55,5 +55,5 @@ notValidFunc:
 	syscall
 	
 skipSpaces:
-	beq $t7, $t0, spaceFunc		
-	addi $t4, $t4, 1					
+	beq $t7, $t0, spaceFunc			#Branch condition if the character is a space
+	addi $t4, $t4, 1			#Add 1 to the address of the register	

@@ -67,4 +67,12 @@ spaceCounterFunc:
 	addi $t3, $t3, 1			#Increments the address of register $t3
 	addi $t1, $t1, 1			#Increments the counter	
 	
-
+breakFunc:
+	li $t7, 4
+	ble $t4, $t7, longInputFunc			
+		
+	li $v0, 4
+	la $a0, invalidInput
+	syscall					
+	li $v0, 10
+	syscall

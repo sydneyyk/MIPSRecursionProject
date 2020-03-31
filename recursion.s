@@ -88,4 +88,4 @@ longInputFunc:
 	
 emptyStringFunc: 
 	la $s0, maxInput			#Loads the users input into the reg to read
-	add $s0, $s0, $t6
+	add $s0, $s0, $t6			#Gets the address of the start of the number

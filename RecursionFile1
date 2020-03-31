@@ -67,4 +67,6 @@ spaceFunc:
 spaceCounterFunc:
 	move $s0, $t7				#Sets the previous chracter with the first one
 	addi $t3, $t3, 1			#Increments the address of register $t3
-	addi $t1, $t1, 1			#Increments the counter			
+	addi $t1, $t1, 1			#Increments the counter	
+	
+

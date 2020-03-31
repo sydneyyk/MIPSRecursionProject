@@ -26,7 +26,7 @@ main:
 	li $t5, 10		#Puts new line character into $t5 reg
 	li $t6, 0		#This counter keeps track of the number of empty spaces before characters in string.
 	
-	LoopingFunc:
+LoopingFunc:
 	lb $t7, 0($t3)				#Retrieves user input
 	beq $t7, $t5, breakFunc			#Branches to break function if there is newline
 	beq $t7, $t0, skipSpaces		#Current character is a space
@@ -44,27 +44,13 @@ main:
 	la $a0, invalidInput			#Loads the prompt message
 	syscall
 	jr $ra
-
-
-
-
-
-
-
-
-skip:
-	addi $t0,$t0,1 #Moves the $t0 to the next element of in the user inputted string
-	j startFunc
 	
-loopFunc:
-	lb $s0, ($t0) #Loads the bit that $t0 is pointing to
-	beq $s0, 0, substring #Checks if the bit is null
-	beq $s0, 10, substring #checks if the bit is a new line 
-	addi $t0,$t0,1 #Move the $t0 to the next element of the 	
+notValidFunc:
 
-subString:
-	bgt $t2, 0, currentString
-
-
-
-  
+	li $v0, 4
+	la $a0, invalidInput
+	syscall	
+		
+	li $v0, 10
+	syscall
+	

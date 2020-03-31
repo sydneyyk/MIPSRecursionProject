@@ -63,3 +63,8 @@ spaceFunc:
 	bne $t7, $t0, spaceCounterFunc		#If current chacter is a space then move to the space fucntion	
 	bne $t4, $0, spaceCounterFunc		#If current character a new line the same as above
 	addi $t6, $t6, 1
+	
+spaceCounterFunc:
+	move $s0, $t7				#Sets the previous chracter with the first one
+	addi $t3, $t3, 1			#Increments the address of register $t3
+	addi $t1, $t1, 1			#Increments the counter			

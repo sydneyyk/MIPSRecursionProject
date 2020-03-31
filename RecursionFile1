@@ -14,17 +14,17 @@ invalidInput:	.asciiz "Invalid input"
 .global main
 
 main:
-	li $v0, 8		#System call reads string
-	la $a0, maxSize		#The users input is moved to the $a0 reg
+	li $v0, 8				#System call reads string
+	la $a0, maxSize				#The users input is moved to the $a0 reg
 	syscall
 	
-	li $t0, 32		#Storing the available space (32 bits) into $t3
-	li $t1, 0 		#Counter (x = 0)
-	li $s0, 0		#Keeps track of of the previous character being passed in
-	la $t3, maxSize		#Loading the input from user into address of register
-	li $t4, 0		#Number of characters equals zero
-	li $t5, 10		#Puts new line character into $t5 reg
-	li $t6, 0		#This counter keeps track of the number of empty spaces before characters in string.
+	li $t0, 32				#Storing the available space (32 bits) into $t3
+	li $t1, 0 				#Counter (x = 0)
+	li $s0, 0				#Keeps track of of the previous character being passed in
+	la $t3, maxSize				#Loading the input from user into address of register
+	li $t4, 0				#Number of characters equals zero
+	li $t5, 10				#Puts new line character into $t5 reg
+	li $t6, 0				#This counter keeps track of the number of empty spaces before characters in string.
 	
 LoopingFunc:
 	lb $t7, 0($t3)				#Retrieves user input
@@ -56,4 +56,10 @@ notValidFunc:
 	
 skipSpaces:
 	beq $t7, $t0, spaceFunc			#Branch condition if the character is a space
-	addi $t4, $t4, 1			#Add 1 to the address of the register	
+	addi $t4, $t4, 1			#Add 1 to the address of the register
+	
+spaceFunc:
+
+	bne $t7, $t0, spaceCounterFunc		#If current chacter is a space then move to the space fucntion	
+	bne $t4, $0, spaceCounterFunc		#If current character a new line the same as above
+	addi $t6, $t6, 1

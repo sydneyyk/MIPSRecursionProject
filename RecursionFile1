@@ -46,7 +46,6 @@ LoopingFunc:
 	jr $ra
 	
 notValidFunc:
-
 	li $v0, 4				#System call prints
 	la $a0, invalidInput			#Loads the prompt message
 	syscall	
@@ -59,7 +58,6 @@ skipSpaces:
 	addi $t4, $t4, 1			#Add 1 to the address of the register
 	
 spaceFunc:
-
 	bne $t7, $t0, spaceCounterFunc		#If current chacter is a space then move to the space fucntion	
 	bne $t4, $0, spaceCounterFunc		#If current character a new line the same as above
 	addi $t6, $t6, 1

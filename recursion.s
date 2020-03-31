@@ -80,8 +80,7 @@ breakFunc:
 longInputFunc: 
 	bne $t4, $zero, emptyStringFunc   		
 	beq $t7, $t5, emptyStringFunc     	
-	li $v0, 4
-	la $a0, invalidInput
+	******
       	syscall
 	li $v0, 10
 	syscall

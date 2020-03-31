@@ -78,9 +78,11 @@ breakFunc:
 	syscall
 	
 longInputFunc: 
-	bne $t4, $zero, emptyStringFunc   		
-	beq $t7, $t5, emptyStringFunc     	
+	bne $t4, $zero, emptyStringFunc   	#Branch conditition to go to an empty line if user input is emp	
+	beq $t7, $t5, emptyStringFunc     	#Branch comparison condition to check if user input is new line character
 	******
       	syscall
 	li $v0, 10
 	syscall
+	
+	

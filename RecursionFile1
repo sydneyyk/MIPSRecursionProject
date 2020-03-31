@@ -54,3 +54,6 @@ notValidFunc:
 	li $v0, 10
 	syscall
 	
+skipSpaces:
+	beq $t7, $t0, spaceFunc		
+	addi $t4, $t4, 1					

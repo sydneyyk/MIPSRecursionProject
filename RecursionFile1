@@ -47,8 +47,8 @@ LoopingFunc:
 	
 notValidFunc:
 
-	li $v0, 4
-	la $a0, invalidInput
+	li $v0, 4				#System call prints
+	la $a0, invalidInput			#Loads the prompt message
 	syscall	
 		
 	li $v0, 10

@@ -1,180 +1,185 @@
-# Howard ID = 02878236
-# N = 26 + (02878236 % 11)
-# N = 35 
-# Base 35
-# M = N - 10
-# M = 35 - 10
-# M = 25 (The range is through the 25th letter of the alphabet, Y)
+.data		
+#Invalid Messages
+maxInput:				.space 101
+invalidInput:			.asciiz "Invalid input"
 
-.data
-maxSize:	.space 101
-invalidInput:	.asciiz "Invalid input"
 
-.text
+.text				
+.globl main
 
-.global main
 main:
-	li $v0, 8				#System call reads string
-	la $a0, maxSize				#The users input is moved to the $a0 reg
-	syscall
-	
-	li $t0, 32				#Storing the available space (32 bits) into $t3
-	li $t1, 0 				#Counter (x = 0)
-	li $s0, 0				#Keeps track of of the previous character being passed in
-	la $t3, maxSize				#Loading the input from user into address of register
-	li $t4, 0				#Number of characters equals zero
-	li $t5, 10				#Puts new line character into $t5 reg
-	li $t6, 0				#This counter keeps track of the number of empty spaces before characters in string.
-	
+		li $v0, 8					#System call reads string
+		la $a0, maxInput				#The users input is moved to the $a0 reg
+		syscall
+		li $t0, 32					#Storing the available space (32 bits) into $t3
+		li $t1, 0					#Counter (x = 0)					
+		li $s0, 0					#
+		la $t3, maxInput				#
+		li $t4, 0					#
+		li $t5, 10					#loaded new line into $t5
+		li $t6, 0					#second counter to track number of spaces before actual input
+
 LoopingFunc:
-	lb $t7, 0($t3)				#Retrieves user input
-	beq $t7, $t5, breakFunc			#Branches to break function if there is newline
-	beq $t7, $t0, skipSpaces		#Current character is a space
-	bne $s0, $t0, skipSpaces		#Previous character is a space
-	beq $t4, $0, skipSpaces			#There are still characters left(prev num of characters != 0)
-	beq $t7, $0, skipSpaces			#Character is empty space
-	beq $t7, $t5, skipSpaces		#Character is newline
-	
-	sub $t3, $t1, $t6			#Subtracts the counter from address of the the pointer
-	addi $t3, $t3, 1			#Adds one to current register
-	li $t7, 4				#Loads the characters that are valid from the input
-	ble $t3, $t7, notValidFunc		#The input is within range but is still not valid
-	
-	li $v0, 4				#System call prints 
-	la $a0, invalidInput			#Loads the prompt message
-	syscall
-	jr $ra
+		lb $t7, 0($t3)					#get string input
+		beq $t7, $t5, breakFunc				#break if character is a newline char
+		beq $t7, $t0, skipSpaces        		#
+		bne $s0, $t0, skipSpaces        		#
+		beq $t4, $0, skipSpaces         		#
+		beq $t7, $0, skipSpaces         		#
+		beq $t7, $t5, skipSpaces        		#
+	#if input is invalidInput && invalidInput, choose invalidInput 
+		
+		sub $t3, $t1, $t6								
+		addi $t3, $t3, 1				#increment register by 1
+		li $t7, 4										
+		ble $t3, $t7, notValidFunc     
+		
+		li $v0, 4
+		la $a0,invalidInput
+		
+		syscall									
+		jr $ra	
 	
 notValidFunc:
-	li $v0, 4				#System call prints
-	la $a0, invalidInput			#Loads the prompt message
-	syscall	
+
+		li $v0, 4
+		la $a0, invalidInput
+		syscall	
 		
-	li $v0, 10
-	syscall
-	
+		li $v0, 10
+		syscall
+		
 skipSpaces:
-	beq $t7, $t0, spaceFunc			#Branch condition if the character is a space
-	addi $t4, $t4, 1			#Add 1 to the address of the register
-	
+		beq $t7, $t0, spaceFunc				#branch if current character is a space else proceed
+		addi $t4, $t4, 1				
+
 spaceFunc:
-	bne $t7, $t0, spaceCounterFunc		#If current chacter is a space then move to the space fucntion	
-	bne $t4, $0, spaceCounterFunc		#If current character a new line the same as above
-	addi $t6, $t6, 1
-	
-spaceCounterFunc:
-	move $s0, $t7				#Sets the previous chracter with the first one
-	addi $t3, $t3, 1			#Increments the address of register $t3
-	addi $t1, $t1, 1			#Increments the counter	
-	j LoopingFunc
-	
-breakFunc:
-	li $t7, 4
-	ble $t4, $t7, longInputFunc		#Checks to see if the user input is more than 4 bytes	
+
+		bne $t7, $t0, spaceCounterFunc			#if current character is a space
+		bne $t4, $0, spaceCounterFunc			
+		addi $t6, $t6, 1
 		
-	li $v0, 4
-	la $a0, invalidInput			#Prints the invalid prompt if the the characters are more than 4 bytes
-	syscall					
-	li $v0, 10
-	syscall
-	
+spaceCounterFunc:
+		move $s0, $t7					#set previous character with current one
+		addi $t3, $t3, 1				#incremented the address
+		addi $t1, $t1, 1				#incremented i
+		j LoopingFunc
+		
+breakFunc:
+		li $t7, 4
+		ble $t4, $t7, longInputFunc			#checks if userInput is more than 4
+		
+		li $v0, 4
+		la $a0, invalidInput
+		syscall						#print invalidInput if char>4
+		li $v0, 10
+		syscall
+		
 longInputFunc: 
-	bne $t4, $zero, emptyStringFunc   	#Branch conditition to go to an empty line if user input is empty	
-	beq $t7, $t5, emptyStringFunc     	#Branch comparison condition to check if user input is new line character
-	li $v0, 4
-	la $a0, invalidInput
+		bne $t4, $zero, emptyStringFunc   		#if user input is empty, and
+		beq $t7, $t5, emptyStringFunc     		#if user input is a newline
+		li $v0, 4
+		la $a0, invalidInput
       	syscall
-	li $v0, 10
-	syscall
-	
-emptyStringFunc: 
-	la $s0, maxInput			#Loads the users input into the reg to read
-	add $s0, $s0, $t6			#Gets the address of the start of the number
-	
-	addi $sp, $sp, -4			#Allocates space for the value to go in register
-	sw $ra, 0($sp)						
+		li $v0, 10
+		syscall
+		
+emptyStringFunc:
+	#overwriting registers 
+		la $s0, maxInput
+		add $s0, $s0, $t6				#got the address of the start of the number
+		
+		addi $sp, $sp, -4				#allocate space
+		sw $ra, 0($sp)						
 
-	addi $sp, $sp, -8
-	
-	sw $s0, 0($sp)				#Sets address of start of the iinputed number
-	sw $t4, 4($sp)				#Sets length of number
-	jal conversionFunc
+		addi $sp, $sp, -8
+		
+		sw $s0, 0($sp)					#set address of start of number
+		sw $t4, 4($sp)					#set length of number
+		jal conversionFunc
 
-	lw $t3, 0($sp)
-	addi $sp, $sp, 4
-	
-	li $v0, 1									
-	move $a0, $t3
-	syscall	
-	
-	lw $ra, 0($sp)									
-	addi $sp, $sp, 4						
-	jr $ra
-	
+		lw $t3, 0($sp)
+		addi $sp, $sp, 4
+		
+		li $v0, 1									
+		move $a0, $t3
+		syscall						#display result
+		
+		lw $ra, 0($sp)					#restore return address
+		addi $sp, $sp, 4						
+		jr $ra
+		
 conversionFunc:
 
-	lw $a0, 0($sp)
-	lw $a1, 4($sp)
-	addi $sp, $sp, 8
-	
-	addi $sp, $sp, -20							
-	sw $ra, 0($sp)								
-	sw $s0, 4($sp)				#$s0 stores the addresss of the string		
-	sw $s1, 8($sp)							
-	sw $s2, 12($sp)
-	sw $s3, 16($sp)	
-	
-	move $s0, $a0							
-	move $s1, $a1
+		lw $a0, 0($sp)
+		lw $a1, 4($sp)
+		addi $sp, $sp, 8	
+		
+		#store parameters of arrays
+		addi $sp, $sp, -20							
+		sw $ra, 0($sp)								
+		sw $s0, 4($sp)					#s0  = used for address of array			
+		sw $s1, 8($sp)							
+		sw $s2, 12($sp)
+		sw $s3, 16($sp)								
 
-	li $t3, 1
-	bne $s1, $t3, PassFunc			#If the length of the string is 1
-	lb $t7, 0($s0)				#Loads the first element of the string into the reg
-	
-	move $a0, $t7				#Sets character to argument for charToDeci function
-	jal charToDeci
-	move $t7, $v0				#Gets result of the conversion
-	move $t3, $t7				#Put the first element in $t3 before it's in stack for the return
+#transfer arguments to s-registers
+		move $s0, $a0							
+		move $s1, $a1		
 
-	j conversionExit
+		#base
+		li $t3, 1
+		bne $s1, $t3, PassFunc				#if length is equal 1
+		lb $t7, 0($s0)					#load the first element of the array
+		
+		move $a0, $t7					#set character to argument for charToDeci function
+		jal charToDeci
+		move $t7, $v0					#get result
 	
+		move $t3, $t7					#put the first element in $t3, before it's put on the stack to be returned
+
+		j conversionExit
+		
 PassFunc:
-	addi $s1, $s1, -1							
+		addi $s1, $s1, -1							
 	
-	move $a0, $s1					#Sets arguments for exponentFunc
-	jal exponentFunc
-	move $s3, $v0	
+		move $a0, $s1					#set arguments for exponentFunc
+		jal exponentFunc
+		move $s3, $v0								
 	
-	lb $t3, 0($s0)					#Loads the first element of the string
-	move $a0, $t3
-	jal charToDeci
-	move $t3, $v0
-	mul $s2, $t3, $s3
-	addi $s0, $s0, 1				#Increments counter to start of string
+		lb $t3, 0($s0)					#loads the first element of the array
+		move $a0, $t3
+		jal charToDeci
+		move $t3, $v0
+		mul $s2, $t3, $s3
+		addi $s0, $s0, 1				#increment ptr to start of array
 	
-	addi $sp, $sp, -8
-	sw $s0, 0($sp)
-	sw $s1, 4($sp)
 
-	jal conversionFunc
+	#recursion
+		addi $sp, $sp, -8
+		sw $s0, 0($sp)
+		sw $s1, 4($sp)
 
-	lw $t3, 0($sp)
-	addi $sp, $sp, 4	
-	add $t3, $s2, $t3
-	
+		jal conversionFunc
+
+		lw $t3, 0($sp)
+		addi $sp, $sp, 4
+		
+		add $t3, $s2, $t3				#conversion result + first number and put the return value in $t3
+
 conversionExit:
 
-	lw $ra, 0($sp)								
-	lw $s0, 4($sp)						
-	lw $s1, 8($sp)								
-	lw $s2, 12($sp)							
-	lw $s3, 16($sp)
-	addi $sp, $sp, 20							
+		lw $ra, 0($sp)								
+		lw $s0, 4($sp)						
+		lw $s1, 8($sp)								
+		lw $s2, 12($sp)							
+		lw $s3, 16($sp)
+		addi $sp, $sp, 20							
 
-	addi $sp, $sp, -4
-	sw $t3, 0($sp)
+		addi $sp, $sp, -4
+		sw $t3, 0($sp)
 
-	jr $ra
+		jr $ra
 		
 exponentFunc:
 		addi $sp, $sp, -4				#allocate space
@@ -198,7 +203,7 @@ leaveNumFunc:
 		addi $sp, $sp, 4				
 		
 		jr $ra
-
+		
 charToDeci:
 		
 		li $t1, 65
@@ -207,16 +212,16 @@ charToDeci:
 	#convert uppercase letter to decimal
 		blt $a0, $t1, CapitalFunc			#if ascii of char >= 65 and
 		bgt $a0, $t0, CapitalFunc			#if char <= 85
-		addi $a0, $a0, -55						#subtract 55 to get the decimal equivalent of A-y
+		addi $a0, $a0, -55				#subtract 55 to get the decimal equivalent of A-y
 		move $v0, $a0									
 		jr $ra
 		
 CapitalFunc:
 	#lowercase to decimal
 		li $t1, 97												
-		li $t0, 121							#least and largest ascii value for lowercase a - y
-		blt $a0, $t1, LowercaseFunc		#if value >= 85 and
-		bgt $a0, $t0, LowercaseFunc		#if value <= 121
+		li $t0, 121					#least and largest ascii value for lowercase a - y
+		blt $a0, $t1, LowercaseFunc			#if value >= 85 and
+		bgt $a0, $t0, LowercaseFunc			#if value <= 121
 		addi $a0, $a0, -87										
 		move $v0, $a0
 		jr $ra
@@ -224,10 +229,10 @@ CapitalFunc:
 		
 LowercaseFunc:
 		li $t1, 48													
-		li $t0, 57							#least and largest ascii value for integers 0-9
-		blt $a0, $t1, charToIntFunc	#convert if ascii[value] >= 48 and
-		bgt $a0, $t0, charToIntFunc	#if ascii[value] <= 57
-		addi $a0, $a0, -48						#get the decimal value of ascii number
+		li $t0, 57					#least and largest ascii value for integers 0-9
+		blt $a0, $t1, charToIntFunc			#convert if ascii[value] >= 48 and
+		bgt $a0, $t0, charToIntFunc			#if ascii[value] <= 57
+		addi $a0, $a0, -48				#get the decimal value of ascii number
 		move $v0, $a0
 		jr $ra	
 		

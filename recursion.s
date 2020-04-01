@@ -136,3 +136,11 @@ conversionFunc:
 	move $t3, $t7				#Put the first element in $t3 before it's in stack for the return
 
 	j conversionExit
+	
+PassFunc:
+	addi $s1, $s1, -1							
+	
+	move $a0, $s1					#Sets arguments for exponentFunc
+	jal exponentFunc
+	move $s3, $v0	
+	

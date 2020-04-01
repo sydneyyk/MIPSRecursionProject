@@ -102,13 +102,13 @@ emptyStringFunc:
 	lw $t3, 0($sp)
 	addi $sp, $sp, 4
 	
-	lb $s0, ($t0) # loads the bit that $t0 is pointing to
-	lw $ra, 0($sp)					
-	beq $s0, 0, insubstring# check if the bit is null					
+	li $v0, 1									
+	move $a0, $t3
+	syscall	
+	
+	lw $ra, 0($sp)									
 	addi $sp, $sp, 4						
-	beq $s0, 10, insubstring #checks if the bit is a new line 	
-	addi $t0,$t0,1 #move the $t0 to the next element of the array	
-	beq $s0, 44, insubstring #check if bit is a comma
+	jr $ra
 	
 conversionFunc:
 
@@ -116,7 +116,6 @@ conversionFunc:
 	lw $a1, 4($sp)
 	addi $sp, $sp, 8
 	
-	#store parameters of arrays
 	addi $sp, $sp, -20							
 	sw $ra, 0($sp)								
 	sw $s0, 4($sp)				#$s0 stores the addresss of the array			

@@ -103,7 +103,9 @@ emptyStringFunc:
 	addi $sp, $sp, 4
 	
 	lb $s0, ($t0) # loads the bit that $t0 is pointing to
-	beq $s0, 0, insubstring# check if the bit is null
+	lw $ra, 0($sp)					
+	beq $s0, 0, insubstring# check if the bit is null					
+	addi $sp, $sp, 4						
 	beq $s0, 10, insubstring #checks if the bit is a new line 	
 	addi $t0,$t0,1 #move the $t0 to the next element of the array	
 	beq $s0, 44, insubstring #check if bit is a comma

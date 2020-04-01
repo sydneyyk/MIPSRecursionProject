@@ -118,7 +118,7 @@ conversionFunc:
 	
 	addi $sp, $sp, -20							
 	sw $ra, 0($sp)								
-	sw $s0, 4($sp)				#$s0 stores the addresss of the array			
+	sw $s0, 4($sp)				#$s0 stores the addresss of the string		
 	sw $s1, 8($sp)							
 	sw $s2, 12($sp)
 	sw $s3, 16($sp)	
@@ -127,5 +127,5 @@ conversionFunc:
 	move $s1, $a1
 
 	li $t3, 1
-	bne $s1, $t3, PassFunc			#if length is equal 1
-	lb $t7, 0($s0)					#load the first element of the array
+	bne $s1, $t3, PassFunc			#If the length of the string is 1
+	lb $t7, 0($s0)				#Loads the first element of the string into the reg

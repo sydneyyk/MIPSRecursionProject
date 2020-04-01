@@ -99,4 +99,7 @@ emptyStringFunc:
 	sw $t4, 4($sp)				#Sets length of number
 	jal conversionFunc
 
+	lw $t3, 0($sp)
+	addi $sp, $sp, 4
+	
 	

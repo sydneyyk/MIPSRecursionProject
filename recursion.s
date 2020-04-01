@@ -198,3 +198,8 @@ leaveNumFunc:
 		
 		jr $ra
 		
+multu $s4, $s3 #(rightmost character * base^leftmost position)
+	mflo $s4 #store result from operation in $s3
+	addu $s5, $s5, $s4 #$s5 should hold resulting value
+	addi $s6, $s6, 1 #mover over to next character 
+	jal baseCase

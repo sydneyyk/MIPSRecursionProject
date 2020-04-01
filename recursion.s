@@ -110,5 +110,9 @@ emptyStringFunc:
 	addi $t0,$t0,1 #move the $t0 to the next element of the array	
 	beq $s0, 44, insubstring #check if bit is a comma
 	
-	
+conversionFunc:
+
+	lw $a0, 0($sp)
+	lw $a1, 4($sp)
+	addi $sp, $sp, 8	
 

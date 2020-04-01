@@ -212,7 +212,7 @@ charToDeci:
 	#convert uppercase letter to decimal
 		blt $a0, $t1, CapitalFunc			#if ascii of char >= 65 and
 		bgt $a0, $t0, CapitalFunc			#if char <= 85
-		addi $a0, $a0, -55				#subtract 55 to get the decimal equivalent of A-y
+		addi $a0, $a0, -55				#subtract 55 to get the decimal equivalent of A-Y
 		move $v0, $a0									
 		jr $ra
 		

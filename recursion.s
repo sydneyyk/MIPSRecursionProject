@@ -176,7 +176,25 @@ conversionExit:
 	jr $ra
 		
 exponentFunc:
-	addi $sp, $sp, -4				#Makes space for the value
-	sw $ra, 0($sp)					#Stores the address to return
-	
-	
+		addi $sp, $sp, -4				#allocate space
+		sw $ra, 0($sp)					#store returning address
+		
+		li $t3, 0
+		bne $a0, $t3, ignoreExponent
+		li $v0, 1
+		j leaveNumFunc
+		
+ignoreExponent:
+
+		addi $a0, $a0, -1				#setting argument for recursion call
+		jal exponentFunc
+		move $t7, $v0
+		li $t1,35									
+		mul $v0, $t1, $t7				#put multiplication result into $v0
+
+leaveNumFunc:
+		lw $ra, 0($sp)					#restore address
+		addi $sp, $sp, 4				
+		
+		jr $ra
+		

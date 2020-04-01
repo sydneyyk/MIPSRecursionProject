@@ -151,3 +151,13 @@ PassFunc:
 	mul $s2, $t3, $s3
 	addi $s0, $s0, 1				#Increments counter to start of string
 	
+	addi $sp, $sp, -8
+	sw $s0, 0($sp)
+	sw $s1, 4($sp)
+
+	jal conversionFunc
+
+	lw $t3, 0($sp)
+	addi $sp, $sp, 4
+		
+	add $t3, $s2, $t3

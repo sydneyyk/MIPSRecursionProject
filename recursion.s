@@ -12,6 +12,7 @@ invalidInput:	.asciiz "Invalid input"
 
 .text
 
+.global main
 main:
 	li $v0, 8				#System call reads string
 	la $a0, maxSize				#The users input is moved to the $a0 reg
@@ -65,6 +66,7 @@ spaceCounterFunc:
 	move $s0, $t7				#Sets the previous chracter with the first one
 	addi $t3, $t3, 1			#Increments the address of register $t3
 	addi $t1, $t1, 1			#Increments the counter	
+	j LoopingFunc
 	
 breakFunc:
 	li $t7, 4

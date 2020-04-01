@@ -123,6 +123,9 @@ conversionFunc:
 	sw $s2, 12($sp)
 	sw $s3, 16($sp)	
 	
-#
 	move $s0, $a0							
 	move $s1, $a1
+
+	li $t3, 1
+	bne $s1, $t3, PassFunc			#if length is equal 1
+	lb $t7, 0($s0)					#load the first element of the array

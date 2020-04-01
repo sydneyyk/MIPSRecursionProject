@@ -158,6 +158,15 @@ PassFunc:
 	jal conversionFunc
 
 	lw $t3, 0($sp)
-	addi $sp, $sp, 4
-		
+	addi $sp, $sp, 4	
 	add $t3, $s2, $t3
+	
+conversionExit:
+
+	lw $ra, 0($sp)								
+	lw $s0, 4($sp)						
+	lw $s1, 8($sp)								
+	lw $s2, 12($sp)							
+	lw $s3, 16($sp)
+	addi $sp, $sp, 20							
+

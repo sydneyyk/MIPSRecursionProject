@@ -114,5 +114,12 @@ conversionFunc:
 
 	lw $a0, 0($sp)
 	lw $a1, 4($sp)
-	addi $sp, $sp, 8	
-
+	addi $sp, $sp, 8
+	
+	#store parameters of arrays
+	addi $sp, $sp, -20							
+	sw $ra, 0($sp)								
+	sw $s0, 4($sp)				#$s0 stores the addresss of the array			
+	sw $s1, 8($sp)							
+	sw $s2, 12($sp)
+	sw $s3, 16($sp)	

@@ -11,7 +11,6 @@ maxSize:	.space 101
 invalidInput:	.asciiz "Invalid input"
 
 .text
-.global main
 
 main:
 	li $v0, 8				#System call reads string

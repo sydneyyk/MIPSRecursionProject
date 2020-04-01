@@ -144,3 +144,10 @@ PassFunc:
 	jal exponentFunc
 	move $s3, $v0	
 	
+	lb $t3, 0($s0)					#Loads the first element of the string
+	move $a0, $t3
+	jal charToDeci
+	move $t3, $v0
+	mul $s2, $t3, $s3
+	addi $s0, $s0, 1				#Increments counter to start of string
+	

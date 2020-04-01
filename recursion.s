@@ -170,3 +170,13 @@ conversionExit:
 	lw $s3, 16($sp)
 	addi $sp, $sp, 20							
 
+	addi $sp, $sp, -4
+	sw $t3, 0($sp)
+
+	jr $ra
+		
+exponentFunc:
+	addi $sp, $sp, -4				#Makes space for the value
+	sw $ra, 0($sp)					#Stores the address to return
+	
+	

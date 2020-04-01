@@ -129,3 +129,10 @@ conversionFunc:
 	li $t3, 1
 	bne $s1, $t3, PassFunc			#If the length of the string is 1
 	lb $t7, 0($s0)				#Loads the first element of the string into the reg
+	
+	move $a0, $t7				#Sets character to argument for charToDeci function
+	jal charToDeci
+	move $t7, $v0				#Gets result of the conversion
+	move $t3, $t7				#Put the first element in $t3 before it's in stack for the return
+
+	j conversionExit

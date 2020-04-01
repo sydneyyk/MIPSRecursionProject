@@ -203,3 +203,41 @@ multu $s4, $s3 #(rightmost character * base^leftmost position)
 	addu $s5, $s5, $s4 #$s5 should hold resulting value
 	addi $s6, $s6, 1 #mover over to next character 
 	jal baseCase
+charToDeci:
+		
+		li $t1, 65
+		li $t0, 90
+
+	#convert uppercase letter to decimal
+		blt $a0, $t1, CapitalFunc			#if ascii of char >= 65 and
+		bgt $a0, $t0, CapitalFunc			#if char <= 85
+		addi $a0, $a0, -55						#subtract 55 to get the decimal equivalent of A-y
+		move $v0, $a0									
+		jr $ra
+		
+CapitalFunc:
+	#lowercase to decimal
+		li $t1, 97												
+		li $t0, 121							#least and largest ascii value for lowercase a - y
+		blt $a0, $t1, LowercaseFunc		#if value >= 85 and
+		bgt $a0, $t0, LowercaseFunc		#if value <= 121
+		addi $a0, $a0, -87										
+		move $v0, $a0
+		jr $ra
+		
+		
+LowercaseFunc:
+		li $t1, 48													
+		li $t0, 57							#least and largest ascii value for integers 0-9
+		blt $a0, $t1, charToIntFunc	#convert if ascii[value] >= 48 and
+		bgt $a0, $t0, charToIntFunc	#if ascii[value] <= 57
+		addi $a0, $a0, -48						#get the decimal value of ascii number
+		move $v0, $a0
+		jr $ra	
+		
+charToIntFunc:
+		li $v0, 4
+		la $a0, invalidInput
+		syscall
+		li $v0, 10
+		syscall

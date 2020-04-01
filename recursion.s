@@ -95,6 +95,8 @@ emptyStringFunc:
 
 	addi $sp, $sp, -8
 	
-	sw $s0, 0($sp)					#Sets address of start of the iinputed number
-	sw $t4, 4($sp)					#Sets length of number
+	sw $s0, 0($sp)				#Sets address of start of the iinputed number
+	sw $t4, 4($sp)				#Sets length of number
 	jal conversionFunc
+
+	

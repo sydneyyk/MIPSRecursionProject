@@ -123,3 +123,7 @@ conversionFunc:
 	sw $s1, 8($sp)							
 	sw $s2, 12($sp)
 	sw $s3, 16($sp)	
+	
+#
+	move $s0, $a0							
+	move $s1, $a1
